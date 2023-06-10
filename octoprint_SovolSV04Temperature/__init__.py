@@ -22,7 +22,7 @@ class Sovolsv04temperaturePlugin(octoprint.plugin.OctoPrintPlugin):
             tool1_actual = matches.group('tool1_actual')
             bed_set = matches.group('bed_set')
             bed_actual = matches.group('bed_actual')
-            sane = f'T0:{tool0_actual}/ {tool0_set} T1:{tool1_actual}/ {tool1_set} B:{bed_actual}/ {bed_set}'
+            sane = f'T0:{tool0_actual} /{tool0_set} T1:{tool1_actual} /{tool1_set} B:{bed_actual} /{bed_set}'
             print("new line:", sane)
             return line
         return line
