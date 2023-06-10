@@ -3,7 +3,7 @@ import octoprint.plugin
 import re
 
 
-class Sovolsv04temperaturePlugin(octoprint.plugin.OctoPrintPlugin):
+class SovolSV04TemperaturePlugin(octoprint.plugin.OctoPrintPlugin):
     #  T0:209.92 /210.00 B:60.01 /60.00 T0:209.92 /210.00 T1:204.93 /205.00 @:56 B@:53 @0:56 @1:58
     pattern = re.compile(
         r'^ T\d:\d+\.\d+ /\d+\.\d+ '
@@ -29,7 +29,7 @@ class Sovolsv04temperaturePlugin(octoprint.plugin.OctoPrintPlugin):
                    f' B:{bed_actual} /{bed_set}' \
                    f' {extra}'
             print("new line:", sane)
-            return line
+            return sane
         return line
 
     ##~~ Softwareupdate hook
@@ -60,7 +60,7 @@ __plugin_pythoncompat__ = ">=3,<4"  # Only Python 3
 
 def __plugin_load__():
     global __plugin_implementation__
-    __plugin_implementation__ = Sovolsv04temperaturePlugin()
+    __plugin_implementation__ = SovolSV04TemperaturePlugin()
 
     global __plugin_hooks__
     __plugin_hooks__ = {
