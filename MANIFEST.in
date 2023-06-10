@@ -1,0 +1,4 @@
+include README.md
+recursive-include octoprint_SovolSV04Temperature/templates *
+recursive-include octoprint_SovolSV04Temperature/translations *
+recursive-include octoprint_SovolSV04Temperature/static *
