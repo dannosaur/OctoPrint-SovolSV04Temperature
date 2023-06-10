@@ -1,10 +1,8 @@
-# coding=utf-8
 import octoprint.plugin
 import re
 
 
 class SovolSV04TemperaturePlugin(octoprint.plugin.OctoPrintPlugin):
-    #  T0:209.92 /210.00 B:60.01 /60.00 T0:209.92 /210.00 T1:204.93 /205.00 @:56 B@:53 @0:56 @1:58
     pattern = re.compile(
         r'^ T\d:\d+\.\d+ /\d+\.\d+ '
         r'B:(?P<bed_actual>\d+\.\d+) /(?P<bed_set>\d+\.\d+) '
@@ -16,7 +14,6 @@ class SovolSV04TemperaturePlugin(octoprint.plugin.OctoPrintPlugin):
     def parse_temperature_line(self, comm_instance, line, *args, **kwargs):
         matches = self.pattern.match(line)
         if matches:
-            print("line:", line)
             tool0_set = matches.group('tool0_set')
             tool0_actual = matches.group('tool0_actual')
             tool1_set = matches.group('tool1_set')
@@ -28,15 +25,10 @@ class SovolSV04TemperaturePlugin(octoprint.plugin.OctoPrintPlugin):
                    f' T1:{tool1_actual} /{tool1_set}' \
                    f' B:{bed_actual} /{bed_set}' \
                    f' {extra}'
-            print("new line:", sane)
             return sane
         return line
 
-    ##~~ Softwareupdate hook
     def get_update_information(self):
-        # Define the configuration for your plugin to use with the Software Update
-        # Plugin here. See https://docs.octoprint.org/en/master/bundledplugins/softwareupdate.html
-        # for details.
         return {
             "SovolSV04Temperature": {
                 "displayName": "Sovol SV04 Temperature",
@@ -55,7 +47,7 @@ class SovolSV04TemperaturePlugin(octoprint.plugin.OctoPrintPlugin):
 
 
 __plugin_name__ = "Sovol SV04 Temperature"
-__plugin_pythoncompat__ = ">=3,<4"  # Only Python 3
+__plugin_pythoncompat__ = ">=3,<4"
 
 
 def __plugin_load__():
