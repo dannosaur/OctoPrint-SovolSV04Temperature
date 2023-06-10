@@ -15,6 +15,7 @@ class Sovolsv04temperaturePlugin(octoprint.plugin.OctoPrintPlugin):
     def parse_temperature_line(self, comm_instance, line, *args, **kwargs):
         matches = self.pattern.match(line)
         if matches:
+            print("line:", line)
             tool0_set = matches.group('tool0_set')
             tool0_actual = matches.group('tool0_actual')
             tool1_set = matches.group('tool1_set')
@@ -22,6 +23,7 @@ class Sovolsv04temperaturePlugin(octoprint.plugin.OctoPrintPlugin):
             bed_set = matches.group('bed_set')
             bed_actual = matches.group('bed_actual')
             sane = f'T0:{tool0_actual}/ {tool0_set} T1:{tool1_actual}/ {tool1_set} B:{bed_actual}/ {bed_set}'
+            print("new line:", sane)
             return line
         return line
 
