@@ -9,7 +9,8 @@ class Sovolsv04temperaturePlugin(octoprint.plugin.OctoPrintPlugin):
         r'^ T\d:\d+\.\d+ /\d+\.\d+ '
         r'B:(?P<bed_actual>\d+\.\d+) /(?P<bed_set>\d+\.\d+) '
         r'T0:(?P<tool0_actual>\d+\.\d+) /(?P<tool0_set>\d+\.\d+) '
-        r'T1:(?P<tool1_actual>\d+\.\d+) /(?P<tool1_set>\d+\.\d+)'
+        r'T1:(?P<tool1_actual>\d+\.\d+) /(?P<tool1_set>\d+\.\d+) '
+        r'(?P<extra>.*)$'
     )
 
     def parse_temperature_line(self, comm_instance, line, *args, **kwargs):
@@ -22,7 +23,11 @@ class Sovolsv04temperaturePlugin(octoprint.plugin.OctoPrintPlugin):
             tool1_actual = matches.group('tool1_actual')
             bed_set = matches.group('bed_set')
             bed_actual = matches.group('bed_actual')
-            sane = f'T0:{tool0_actual} /{tool0_set} T1:{tool1_actual} /{tool1_set} B:{bed_actual} /{bed_set}'
+            extra = matches.group('extra')
+            sane = f' T0:{tool0_actual} /{tool0_set}' \
+                   f' T1:{tool1_actual} /{tool1_set}' \
+                   f' B:{bed_actual} /{bed_set}' \
+                   f' {extra}'
             print("new line:", sane)
             return line
         return line
